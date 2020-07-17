@@ -6,16 +6,20 @@ import cn.tyzhong.filesystem.album.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
-    @Value("${file.baseUrl}")
-    private String baseUrl;
+    @Value("${file.saveBaseUrl}")
+    private String saveBaseUrl;
+    @Value("${file.visitBaseUrl}")
+    private String visitBaseUrl;
 
     @Autowired
     private AlbumMapper mapper;
@@ -26,21 +30,57 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @Transactional
     public void uploadPhotos(MultipartFile[] photos) {
+        System.out.println("beginTime" + System.currentTimeMillis());
         BufferedOutputStream stream = null;
         for (MultipartFile photo : photos) {
             String fileName = photo.getOriginalFilename();
-            String suffixName = fileName.substring(fileName.lastIndexOf(".") + 1);
-            String uploadPath = baseUrl + fileName;
+            String uploadPath = saveBaseUrl + fileName;
             try {
+                int offset = 0;
+                int length = 1024;
                 byte[] bytes = photo.getBytes();
                 stream = new BufferedOutputStream(new FileOutputStream(new File(uploadPath)));
-                stream.write(bytes);
+                while (offset < bytes.length - 1) {
+                    if (length > bytes.length - offset) length = bytes.length - offset;
+                    stream.write(bytes, offset, length);
+                    offset += length;
+                }
                 stream.close();
             } catch (Exception e) {
                 stream = null;
                 e.printStackTrace();
             }
+            Album album = new Album();
+            album.setSize(getSizeStr(photo.getSize()));
+            album.setName(fileName);
+            album.setVersion(1);
+            album.setUrl(visitBaseUrl + fileName);
+            album.setSuffix(fileName.substring(fileName.lastIndexOf(".") + 1));
+            album.setFolderId("1");
+            album.setRemarks("上传照片");
+            int id = mapper.insert(album);
         }
+        System.out.println("endTime" + System.currentTimeMillis());
+    }
+
+    private String getSizeStr(long size) {
+        double douSize = (double) size;
+        String unit = "B";
+        if (douSize > 1024) {
+            douSize /= 1024;
+            unit = "KB";
+            if (douSize > 1024) {
+                douSize /= 1024;
+                unit = "MB";
+                if (douSize > 1024) {
+                    douSize /= 1024;
+                    unit = "GB";
+                }
+            }
+        }
+        BigDecimal bigSize = new BigDecimal(douSize);
+        return bigSize.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + unit;
     }
 }

@@ -32,7 +32,7 @@ public class Album {
 
     private Date createDate;
 
-    private Integer delFlag;
+    private Integer delFlag = 0;
 
     private String remarks;
 }

@@ -27,7 +27,7 @@
         #{url},
         #{suffix},
         #{folderId},
-        #{createDate},
+        now(),
         #{delFlag},
         #{remarks}
         )

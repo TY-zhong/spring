@@ -20,9 +20,9 @@ public class MybatisConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setTypeAliasesPackage("cn.zhongguochu.mango.**.model"); // 扫描model
+        sessionFactory.setTypeAliasesPackage("cn.tyzhong.filesystem.**.entity"); // 扫描model
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sessionFactory.setMapperLocations(resolver.getResources("classpath:cn/tyzhong/**/*Mapper.xml")); // 扫描映射文件
+        sessionFactory.setMapperLocations(resolver.getResources("classpath:mapper/**/*Mapper.xml")); // 扫描映射文件
         return sessionFactory.getObject();
     }
 }
