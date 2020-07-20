@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.tyzhong.filesystem.album.mapper.AlbumMapper">
+<mapper namespace="cn.tyzhong.filesystem.album.mapper.PhotoMapper">
 
     <!--表所有字段-->
   	<sql id="allColumns">
@@ -10,14 +10,14 @@
         version,
         url,
         suffix,
-        folder_id,
+        album_id,
 		create_date,
 		del_flag,
 		remarks
     </sql>
 
-    <insert id="insert" parameterType="cn.tyzhong.filesystem.album.entity.Album" useGeneratedKeys="true" keyProperty="id">
-        insert into album
+    <insert id="insert" parameterType="cn.tyzhong.filesystem.album.entity.Photo" useGeneratedKeys="true" keyProperty="id">
+        insert into photo
         (<include refid="allColumns"/> )
         values (
         #{id},
@@ -26,7 +26,7 @@
         #{version},
         #{url},
         #{suffix},
-        #{folderId},
+        #{albumId},
         now(),
         #{delFlag},
         #{remarks}

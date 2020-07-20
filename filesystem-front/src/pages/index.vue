@@ -1,5 +1,7 @@
 <template>
-    <router-link to="/album">相册</router-link>
+    <div>
+        <router-link to="/albumlist">相册</router-link>
+    </div>
 </template>
 
 <script>
@@ -9,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-*{
+div {
     text-align: center;
 }
 </style>

@@ -1,6 +1,6 @@
 package cn.tyzhong.filesystem.album;
 
-import cn.tyzhong.filesystem.album.service.AlbumService;
+import cn.tyzhong.filesystem.album.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/album/")
-public class AlbumController {
+public class PhotoController {
     @Autowired
-    private AlbumService service;
+    private PhotoService service;
 
     @PostMapping("upload")
     public Object upload(@RequestParam("photos") MultipartFile[] photos) {

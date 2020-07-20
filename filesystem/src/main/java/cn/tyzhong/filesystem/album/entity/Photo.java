@@ -11,24 +11,24 @@ import java.util.Date;
 @Setter
 @Slf4j
 @ToString
-public class Album {
+public class Photo {
     private String id;
 
-    // 文件大小 K,M,G
+    // 照片大小 K,M,G
     private String size;
 
     private String name;
 
-    // 文件版本，用于同名文件的处理
+    // 照片版本，用于同名文件的处理
     private Integer version;
 
     private String url;
 
-    // 文件后缀 png等
+    // 照片后缀 png等
     private String suffix;
 
-    // 文件所处文件夹id
-    private String folderId;
+    // 照片所在相册id
+    private String albumId;
 
     private Date createDate;
 

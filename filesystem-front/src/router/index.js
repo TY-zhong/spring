@@ -16,7 +16,7 @@ let router = new VueRouter({
             component: Index
         },
         {
-            path: '/album',
+            path: '/albumlist',
             component: AlbumList
         }
     ]

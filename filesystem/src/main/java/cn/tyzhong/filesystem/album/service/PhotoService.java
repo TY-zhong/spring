@@ -1,10 +1,10 @@
 package cn.tyzhong.filesystem.album.service;
 
-import cn.tyzhong.filesystem.album.entity.Album;
+import cn.tyzhong.filesystem.album.entity.Photo;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface AlbumService {
-    Object save(Album album);
+public interface PhotoService {
+    Object save(Photo photo);
 
     void uploadPhotos(MultipartFile[] photos);
 }

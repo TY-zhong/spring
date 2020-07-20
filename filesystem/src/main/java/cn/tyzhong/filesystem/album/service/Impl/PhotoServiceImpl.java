@@ -1,8 +1,8 @@
 package cn.tyzhong.filesystem.album.service.Impl;
 
-import cn.tyzhong.filesystem.album.entity.Album;
-import cn.tyzhong.filesystem.album.mapper.AlbumMapper;
-import cn.tyzhong.filesystem.album.service.AlbumService;
+import cn.tyzhong.filesystem.album.entity.Photo;
+import cn.tyzhong.filesystem.album.mapper.PhotoMapper;
+import cn.tyzhong.filesystem.album.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,17 +15,17 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 
 @Service
-public class AlbumServiceImpl implements AlbumService {
+public class PhotoServiceImpl implements PhotoService {
     @Value("${file.saveBaseUrl}")
     private String saveBaseUrl;
     @Value("${file.visitBaseUrl}")
     private String visitBaseUrl;
 
     @Autowired
-    private AlbumMapper mapper;
+    private PhotoMapper mapper;
 
     @Override
-    public Object save(Album album) {
+    public Object save(Photo photo) {
         return null;
     }
 
@@ -52,13 +52,13 @@ public class AlbumServiceImpl implements AlbumService {
                 stream = null;
                 e.printStackTrace();
             }
-            Album album = new Album();
+            Photo album = new Photo();
             album.setSize(getSizeStr(photo.getSize()));
             album.setName(fileName);
             album.setVersion(1);
             album.setUrl(visitBaseUrl + fileName);
             album.setSuffix(fileName.substring(fileName.lastIndexOf(".") + 1));
-            album.setFolderId("1");
+            album.setAlbumId("1");
             album.setRemarks("上传照片");
             int id = mapper.insert(album);
         }
