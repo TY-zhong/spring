@@ -19,9 +19,7 @@ export default {
     },
     mounted () {
         console.log(1)
-        this.$post('album/list', {}, response => {
-            console.log(response)
-        });
+        this.$post('/album/list', {pageNum: 1, pageSize: 20})
     }
 }
 </script>
