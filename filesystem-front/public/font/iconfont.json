@@ -11,6 +11,13 @@
       "font_class": "xiangce",
       "unicode": "e60b",
       "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "14445904",
+      "name": "相册",
+      "font_class": "xiangce1",
+      "unicode": "e76b",
+      "unicode_decimal": 59243
     }
   ]
 }
