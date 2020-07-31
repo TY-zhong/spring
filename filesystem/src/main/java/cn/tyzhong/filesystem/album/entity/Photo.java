@@ -12,7 +12,7 @@ import java.util.Date;
 @Slf4j
 @ToString
 public class Photo {
-    private String id;
+    private Integer id;
 
     // 照片大小 K,M,G
     private String size;
@@ -28,7 +28,7 @@ public class Photo {
     private String suffix;
 
     // 照片所在相册id
-    private String albumId;
+    private Integer albumId;
 
     private Date createDate;
 

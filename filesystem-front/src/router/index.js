@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import AlbumList from '../pages/album/AlbumList'
+import PhotoList from '../pages/album/PhotoList'
 import Index from '../pages/index'
 
 let router = new VueRouter({
@@ -18,6 +19,10 @@ let router = new VueRouter({
         {
             path: '/albumlist',
             component: AlbumList
+        },
+        {
+            path: '/photolist',
+            component: PhotoList
         }
     ]
 });

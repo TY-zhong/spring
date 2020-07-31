@@ -3,6 +3,9 @@ package cn.tyzhong.filesystem.album.service.Impl;
 import cn.tyzhong.filesystem.album.entity.Photo;
 import cn.tyzhong.filesystem.album.mapper.PhotoMapper;
 import cn.tyzhong.filesystem.album.service.PhotoService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class PhotoServiceImpl implements PhotoService {
@@ -31,7 +35,7 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     @Transactional
-    public void uploadPhotos(MultipartFile[] photos) {
+    public void uploadPhotos(MultipartFile[] photos, Integer albumId) {
         System.out.println("beginTime" + System.currentTimeMillis());
         BufferedOutputStream stream = null;
         for (MultipartFile photo : photos) {
@@ -58,11 +62,21 @@ public class PhotoServiceImpl implements PhotoService {
             album.setVersion(1);
             album.setUrl(visitBaseUrl + fileName);
             album.setSuffix(fileName.substring(fileName.lastIndexOf(".") + 1));
-            album.setAlbumId("1");
+            album.setAlbumId(albumId);
             album.setRemarks("上传照片");
             int id = mapper.insert(album);
         }
         System.out.println("endTime" + System.currentTimeMillis());
+    }
+
+    @Override
+    public PageInfo<List<Photo>> listByAlbumId(Integer albumId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Photo> list = mapper.listByAlbumId(albumId);
+        for (Photo photo : list) {
+            photo.setUrl(visitBaseUrl + photo.getUrl());
+        }
+        return new PageInfo(list);
     }
 
     private String getSizeStr(long size) {
